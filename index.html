@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Alfiya ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0404;
+            min-height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* FLOATING HEARTS */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -30px;
+            color: #ff6b81;
+            opacity: 0;
+            animation: floatUp 8s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* === SCRATCH CARD === */
+        .scratch-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scratch-title {
+            font-size: 2.5rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .scratch-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .scratch-under {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b81, #ff9a9e);
+            z-index: 1;
+        }
+
+        .scratch-under h2 {
+            font-size: 2.2rem;
+            color: #fff;
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            touch-action: none;
+            cursor: pointer;
+        }
+
+        /* === MAIN CONTENT === */
+        .main-content {
+            display: none;
+            padding-bottom: 80px;
+        }
+
+        .show-main {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-text {
+            font-size: 2rem;
+            color: #ffd700;
+            text-align: center;
+            margin: 40px 0 30px;
+        }
+
+        .date-box {
+            background: rgba(255,255,255,0.06);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .date-box p {
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .date-highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .memories {
+            background: rgba(255,107,129,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px solid rgba(255,107,129,0.3);
+        }
+
+        .memories h3 {
+            color: #ff9a9e;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .memory-item {
+            margin: 12px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .photo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 15px;
+            flex-wrap: wrap;
+        }
+
+        .photo-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 25px rgba(255,215,0,0.4);
+            object-fit: cover;
+        }
+
+        .photo-text {
+            max-width: 160px;
+            font-size: 0.9rem;
+        }
+
+        .final-msg {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .final-msg h3 {
+            font-size: 2rem;
+            color: #ff9a9e;
+            margin-bottom: 20px;
+        }
+
+        .final-msg p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .special-text {
+            color: #ffd700;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .signature {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEARTS -->
+    <div class="hearts-bg" id="hearts"></div>
+
+    <div class="container">
+        
+        <!-- SCRATCH SCREEN -->
+        <div class="scratch-screen" id="scratchScreen">
+            <div class="scratch-title">Please Scratch ❤️</div>
+            
+            <div class="scratch-wrapper">
+                <div class="scratch-under">
+                    <h2>❤️<br>Alfiya<br>❤️</h2>
+                </div>
+                <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content" id="mainContent">
+            <div class="welcome-text show-main">Welcome Alfiya ❤️</div>
+            
+            <div class="date-box show-main" style="animation-delay: 0.1s">
+                <p class="date-highlight">12 May 2026, subah 10:35...</p>
+                <p style="margin-top:12px">Wahi waqt tha jab tumne pehli baar 'Hi' likha tha...</p>
+                <p>Aur shayad bina pata gale, meri duniya thodi si aur acchi ho gayi ❤️</p>
+            </div>
+            
+            <div class="memories show-main" style="animation-delay: 0.2s">
+                <h3>Alfiya ki baatein jo dil ko pasand hain 💕</h3>
+                <div class="memory-item">❤️ Jab tum gussa hoti ho na... Pata nahi kyun, acchi lagti ho</div>
+                <div class="memory-item">😊 Tumhari muskurahat ka jaadu hai</div>
+                <div class="memory-item">💕 Tumhara mujh par poora bharosa</div>
+            </div>
+            
+            <div class="photo-area show-main" style="animation-delay: 0.3s">
+                <img src="arshad.jpg.jpeg" class="photo-img" alt="Alfiya">
+                <div class="photo-text">Kaash aapne photo di hoti... to ye jagah khaali na hoti ❤️</div>
+            </div>
+            
+            <div class="final-msg show-main" style="animation-delay: 0.4s">
+                <h3>Alfiya...</h3>
+                <p>Bas ek baat kehna chahta hoon...</p>
+                <p class="special-text">"Kabhi chhod kar mat jaana.<br>Tumhari aadat si ho gayi hai..."</p>
+                <div class="signature">— Arshad ❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MUSIC -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946bd3cd4e.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // === SCRATCH CARD ===
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 260;
+        canvas.height = 260;
+        
+        // Draw golden layer
+        const grad = ctx.createLinearGradient(0, 0, 260, 260);
+        grad.addColorStop(0, '#FFD700');
+        grad.addColorStop(0.5, '#FFEC8B');
+        grad.addColorStop(1, '#DAA520');
+        
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 260, 260);
+        
+        // Shine
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillRect(0, 0, 130, 260);
+        
+        // Text
+        ctx.fillStyle = '#8B7500';
+        ctx.font = 'bold 22px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('SCRATCH', 130, 125);
+
+        let isDrawing = false;
+        let scratched = 0;
+        let isRevealed = false;
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            let x, y;
+            
+            if(e.touches) {
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+            
+            return { x, y };
+        }
+
+        function scratch(e) {
+            if(!isDrawing || isRevealed) return;
+            
+            const pos = getPos(e);
+            if(!pos) return;
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 28, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Extra dots
+            for(let i = 0; i < 4; i++) {
+                let ox = pos.x + (Math.random() * 30 - 15);
+                let oy = pos.y + (Math.random() * 30 - 15);
+                ctx.beginPath();
+                ctx.arc(ox, oy, 12, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            scratched += 250;
+            
+            // 10% = 6760 approx
+            if(scratched > 6000 && !isRevealed) {
+                reveal();
+            }
+        }
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('mouseup', () => { isDrawing = false; });
+        canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+
+        // Touch Events
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); });
+        canvas.addEventListener('touchend', () => { isDrawing = false; });
+
+        // === REVEAL ===
+        function reveal() {
+            isRevealed = true;
+            
+            // Hide scratch
+            document.getElementById('scratchScreen').style.display = 'none';
+            
+            // Show main
+            const main = document.getElementById('mainContent');
+            main.style.display = 'block';
+            
+            // Play music
+            document.getElementById('bgMusic').play();
+            
+            // Start hearts
+            startHearts();
+        }
+
+        // === HEARTS ===
+        function startHearts() {
+            const container = document.getElementById('hearts');
+            
+            for(let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const h = document.createElement('div');
+                    h.className = 'floating-heart';
+                    h.innerHTML = '❤️';
+                    h.style.left = Math.random() * 100 + 'vw';
+                    h.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    h.style.animationDuration = (5 + Math.random() * 4) + 's';
+                    container.appendChild(h);
+                }, i * 350);
+            }
+        }
+    </script>
+</body>
+</html>
